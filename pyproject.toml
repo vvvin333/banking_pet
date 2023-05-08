@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "banking-pet"
+version = "0.1.0"
+description = ""
+authors = ["vvvin333 <333vvvin@gmail.com>"]
+readme = "README.md"
+packages = [{include = "banking_pet"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+django = "^4.2.1"
+django-ninja = "^0.21.0"
+pytest-django = "^4.5.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
