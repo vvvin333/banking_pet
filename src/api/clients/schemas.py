@@ -10,5 +10,5 @@ class Client(Schema):
 
 class Payment(Schema):
     from_ptn: int
-    to_ptn: list[int]
+    to_ptn: str
     amount: Decimal

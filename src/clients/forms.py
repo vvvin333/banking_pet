@@ -11,11 +11,5 @@ class PaymentForm(forms.Form):
             Client.objects.all().values_list("personal_tax_number", flat=True)
         )
     )
-    to_ptn = forms.MultipleChoiceField(
-        choices=(
-            (ptx, ptx)
-            for ptx in
-            Client.objects.all().values_list("personal_tax_number", flat=True)
-        ),
-    )
+    to_ptn = forms.CharField()
     amount = forms.DecimalField(required=True)

@@ -24,7 +24,11 @@ def test_pay_from_client(client, db, bake_clients):
     amount = 30.30
     response = client.post(
         "/api/clients/transact",
-        data={"from_ptn": from_ptn, "to_ptn": to_ptn, "amount": amount},
+        data={
+            "from_ptn": from_ptn,
+            "to_ptn": ",".join(map(str, to_ptn)),
+            "amount": amount,
+        },
     )
     assert response.status_code == 200
     response_json = response.json()
@@ -46,7 +50,11 @@ def test_pay_from_client_round(client, db, bake_clients):
     amount = 10
     response = client.post(
         "/api/clients/transact",
-        data={"from_ptn": from_ptn, "to_ptn": to_ptn, "amount": amount},
+        data={
+            "from_ptn": from_ptn,
+            "to_ptn": ",".join(map(str, to_ptn)),
+            "amount": amount,
+        },
     )
     assert response.status_code == 200
     response_json = response.json()

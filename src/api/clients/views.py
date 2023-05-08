@@ -24,15 +24,23 @@ def pay_from_client(
     if donor.account < payload.amount:
         raise BadRequest("Insufficient funds")
 
-    recipients = Client.objects.filter(personal_tax_number__in=payload.to_ptn)
-    if recipients.count() != len(payload.to_ptn):
+    try:
+        to_ptn = [
+            int(ptn)
+            for ptn in payload.to_ptn.split(",")
+        ]
+    except ValueError:
+        raise BadRequest("Wrong format")
+
+    recipients = Client.objects.filter(personal_tax_number__in=to_ptn)
+    if recipients.count() != len(to_ptn):
         raise BadRequest("Some clients not found")
 
     share_payment = round(
-        payload.amount/len(payload.to_ptn),
+        payload.amount/len(to_ptn),
         MONEY_PRECISION,
     )
-    donor.account -= share_payment * len(payload.to_ptn)
+    donor.account -= share_payment * len(to_ptn)
     for recipient in recipients:
         recipient.account += share_payment
     clients = [donor] + list(recipients)
