@@ -11,10 +11,6 @@ class PaymentForm(forms.Form):
             Client.objects.all().values_list("personal_tax_number", flat=True)
         )
     )
-    # ModelChoiceField(
-    #     queryset=Client.objects.all(),
-    #     required=False,
-    # )
     to_ptn = forms.MultipleChoiceField(
         choices=(
             (ptx, ptx)

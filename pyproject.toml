@@ -11,8 +11,19 @@ python = "^3.9"
 django = "^4.2.1"
 django-ninja = "^0.21.0"
 pytest-django = "^4.5.2"
+model-bakery = "^1.11.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+minversion = "7.2.1"
+testpaths = ["./tests/"]
+env_files = [".env.test"]
+python_paths = './src'
+log_level = "info"
+env_override_existing_values = 1
+DJANGO_SETTINGS_MODULE = "banking.settings"
