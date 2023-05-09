@@ -27,7 +27,7 @@ def pay_from_client(
     try:
         to_ptn = [
             int(ptn)
-            for ptn in payload.to_ptn.split(",")
+            for ptn in payload.to_ptn.replace(" ", "").split(",")
         ]
     except ValueError:
         raise BadRequest("Wrong format")
