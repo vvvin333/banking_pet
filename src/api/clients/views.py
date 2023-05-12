@@ -20,9 +20,8 @@ def get_clients(_: HttpRequest) -> list[Client]:
 def pay_from_client(
     _: HttpRequest, payload: schemas.Payment = Form(...)
 ) -> list[Client]:
+    # args validation
     donor = get_object_or_404(Client, personal_tax_number=payload.from_ptn)
-    if donor.account < payload.amount:
-        raise BadRequest("Insufficient funds")
 
     try:
         to_ptn = [
@@ -36,10 +35,14 @@ def pay_from_client(
     if recipients.count() != len(to_ptn):
         raise BadRequest("Some clients not found")
 
+    # business logic
+    if donor.account < payload.amount:
+        raise BadRequest("Insufficient funds")
+
     share_payment = round(
         payload.amount/len(to_ptn),
         MONEY_PRECISION,
-    )
+        )
     donor.account -= share_payment * len(to_ptn)
     for recipient in recipients:
         recipient.account += share_payment
